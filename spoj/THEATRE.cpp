@@ -4,36 +4,42 @@
 #include<cstdio>
 #include<stack>
 
-#define MODE 1000000007
-
+#define MAX 100000
+#define LIMIT 1000000007
 using namespace std;
+
 
 int main(){
 
-	unsigned long long int  result = 1;
-	long int  N,temp;
+	long int  Arr[MAX], N;
+	unsigned long long int total = 1;
 	stack<long int> stk;
+
 
 	scanf("%ld", &N);
 
+	for(int i = 0; i < N; i++)
+		scanf("%ld", &Arr[i]);
+		
+		
+	for(int j = N - 1; j >= 0; j--){
 
-	for( int i = 0; i < N; i++){
+		while(!stk.empty()){
+			
+			if(Arr[j] < stk.top())
+				break;
 	
-		scanf("%ld", &temp);
-
-		while( !stk.empty() && stk.top() < temp){
-			result = (result * temp) % MODE;
 			stk.pop();
 		}
 
-		stk.push(temp);
+		if(!stk.empty())
+			total = (total * stk.top()) % LIMIT;
 
+		stk.push(Arr[j]);	
 	}
 
-	printf("%llu\n", result);
+	printf("%llu\n", total);
 
 
-
-
-
+	return 0;
 }
